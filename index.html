@@ -44,7 +44,7 @@ button:hover{border-color:var(--acc)}button.pri{background:var(--acc);color:#fff
 .hint{position:fixed;right:14px;bottom:calc(80px + env(safe-area-inset-bottom,0px));font-size:15px;color:var(--mut)}
 nav{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--card)}
 #dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}#dots i{width:14px;height:14px;border-radius:50%;background:var(--line);cursor:pointer}#dots i.on{background:var(--acc);transform:scale(1.3)}
-.hide{display:none}
+.hide{display:none}#ex{display:none;position:fixed;top:calc(8px + env(safe-area-inset-top,0px));right:10px;z-index:60;opacity:.25;padding:4px 12px}#ex:hover{opacity:1}body.present #ex{display:block}body.present nav,body.present #bar,body.present .hint{display:none}
 </style>
 </head>
 <body>
@@ -52,9 +52,8 @@ nav{display:flex;align-items:center;justify-content:space-between;gap:10px;paddi
 <div id="stage">
 
 <section class="slide">
-<span class="tag">SEMI-DETAILED LESSON PLAN · BSIT 3RD YEAR</span>
 <h1>Module 4: Routing Information Protocol (RIP)</h1>
-<p class="mut">Pambayang Dalubhasaan ng Marilao · Abangan Norte, Marilao, Bulacan<br>January 15, 2026 · 20 minutes</p>
+<p class="mut">20 minutes</p>
 <div class="card"><h3>Classroom rules: P.E.D.S.</h3>
 <div class="row" id="peds"></div><p class="mut" id="pedtxt">Tap a letter.</p></div>
 </section>
@@ -151,11 +150,11 @@ nav{display:flex;align-items:center;justify-content:space-between;gap:10px;paddi
 <p><b>Components:</b> 2 routers · 4 desktop PCs</p>
 <p>Configure the right IP address for each component.</p></div>
 <h3>Checklist</h3><div id="todo" class="grid"></div>
-<p class="mut">Prepared by: NAME OF THE STUDENT · Course and Section</p>
+<p class="mut">Prepared by: Pedrera, John Eliser D. · IT31B</p>
 </section>
 
 </div>
-<nav><button id="pv">← Prev</button><div id="dots"></div><button class="pri" id="nx">Next →</button></nav>
+<nav><button id="pv">← Prev</button><div id="dots"></div><button id="fs" title="Presentation mode (F)">⛶ Present</button><button class="pri" id="nx">Next →</button></nav><button id="ex" title="Exit (Esc)">✕</button>
 <div class="hint">← → keys to navigate</div>
 
 <script>
@@ -259,6 +258,10 @@ $('#ab').onclick=()=>$('#aa').classList.remove('hide');
 
 go(0);
 const h=parseInt((location.hash||'').slice(2));if(h)go(h-1);
+function pres(on){document.body.classList.toggle('present',on);if(on&&document.documentElement.requestFullscreen)document.documentElement.requestFullscreen().catch(()=>{});if(!on&&document.fullscreenElement)document.exitFullscreen().catch(()=>{})}
+$('#fs').onclick=()=>pres(true);$('#ex').onclick=()=>pres(false);
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)document.body.classList.remove('present')});
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='f'||e.key==='F')pres(!document.body.classList.contains('present'));if(e.key==='Escape')pres(false);if(e.key===' '&&e.target===document.body){e.preventDefault();go(cur+1)}});
 </script>
 </body>
 </html>
